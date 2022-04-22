@@ -1,3 +1,32 @@
-h1 {
-    color: blue;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    line-height: 20px;
+  }
+
+.header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 20px;
+  }
+
+.main-section {
+    text-align: center;
+}
+
+.description {
+    width: 40%;
+    margin: 25px auto 20px;
+}
+
+.btn {
+    border: none;
+    padding: 10px 20px;
+    background-color: #896eff;
+    color: #fff;
+    font-weight: bold;
 }
