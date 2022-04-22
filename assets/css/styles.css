@@ -5,21 +5,33 @@
 body {
     margin: 0;
     line-height: 20px;
+    background-color: #121212;
+  }
+
+  .quiz-container {
+    background-color: #e4e4e4;
+    width: 70%;
+    margin: 100px auto;
+    padding-bottom: 80px;
+    border-radius: 10px;
   }
 
 .header {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      padding: 20px;
+      margin: auto;
+      padding: 30px 350px;
   }
 
 .main-section {
     text-align: center;
+    padding: 20px;
+    margin: auto;
 }
 
 .description {
-    width: 40%;
+    width: 30%;
     margin: 25px auto 20px;
 }
 
