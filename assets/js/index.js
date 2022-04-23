@@ -14,8 +14,16 @@ const startQuiz = () => {
   questionScreen.classList.remove("hide");
 
   // display question
+  displayQuestion();
+};
+
+const displayQuestion = () => {
+  // get question and answers
   getQuestion();
   getAnswers();
+  // add listeners to answer button
+  const getAnswerContainer = document.getElementById("answer-container");
+  getAnswerContainer.addEventListener("click", isCorrect);
 };
 
 const getQuestion = () => {
@@ -36,10 +44,24 @@ const getAnswers = () => {
     const answer = document.createElement("button");
     // add styling
     answer.setAttribute("class", "answer btn");
+    // get answer array
+    currentAnswers = questions[questionNumber - 1].answers;
     // add answer text to button
-    answer.textContent = "answer " + i;
+    answer.textContent = currentAnswers[i].text;
+    answer.setAttribute("data-answer", currentAnswers[i].correct);
     // append to section
     answerContainer.append(answer);
+  }
+};
+
+const isCorrect = (event) => {
+  const target = event.target;
+  const isAnswerCorrect = target.getAttribute("data-answer");
+
+  if (isAnswerCorrect === "true") {
+    console.log("Correct Answer!");
+  } else {
+    console.log("Incorrect answer");
   }
 };
 
