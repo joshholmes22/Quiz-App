@@ -21,7 +21,7 @@ const displayQuestion = () => {
   // get question and answers
   getQuestion();
   getAnswers();
-  // add listeners to answer button
+  // add listener to button container
   const getAnswerContainer = document.getElementById("answer-container");
   getAnswerContainer.addEventListener("click", isCorrect);
 };
@@ -61,8 +61,21 @@ const isCorrect = (event) => {
   if (isAnswerCorrect === "true") {
     console.log("Correct Answer!");
   } else {
-    console.log("Incorrect answer");
+    loadNextQuestion();
   }
+};
+
+const loadNextQuestion = () => {
+  // find and remove question answer
+  const answerSection = document.getElementById("question-screen");
+  const answerContainer = document.getElementById("answer-container");
+  answerContainer.remove();
+  // create new answer container ready for next question
+  const nextAnswer = document.createElement("div");
+  nextAnswer.setAttribute("class", "answer-container");
+  nextAnswer.setAttribute("id", "answer-container");
+  answerSection.append(nextAnswer);
+  displayQuestion();
 };
 
 const questions = [
@@ -78,9 +91,9 @@ const questions = [
   {
     question: "Question 2 goes here",
     answers: [
-      { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
       { text: "right", correct: true },
+      { text: "wrong", correct: false },
+      { text: "wrong", correct: false },
       { text: "wrong", correct: false },
     ],
   },
@@ -88,8 +101,8 @@ const questions = [
     question: "Question 3 goes here",
     answers: [
       { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
       { text: "right", correct: true },
+      { text: "wrong", correct: false },
       { text: "wrong", correct: false },
     ],
   },
@@ -98,8 +111,8 @@ const questions = [
     answers: [
       { text: "wrong", correct: false },
       { text: "wrong", correct: false },
-      { text: "right", correct: true },
       { text: "wrong", correct: false },
+      { text: "right", correct: true },
     ],
   },
 ];
