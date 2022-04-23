@@ -8,9 +8,11 @@ let score = 0;
 const startQuiz = () => {
   // get title screen
   const titleScreen = document.getElementById("title-screen");
+  // hide title screen
   titleScreen.classList.add("hide");
   // get question screen
   const questionScreen = document.getElementById("question-screen");
+  // show questions
   questionScreen.classList.remove("hide");
 
   // display question
@@ -19,16 +21,22 @@ const startQuiz = () => {
 
 const displayQuestion = () => {
   // get question and answers
-  getQuestion();
-  getAnswers();
-  // add listener to button container
-  const getAnswerContainer = document.getElementById("answer-container");
-  getAnswerContainer.addEventListener("click", isCorrect);
+  questionNumber++;
+  // check if there are more questions left
+  if (questionNumber <= questions.length) {
+    getQuestion();
+    getAnswers();
+    // add listener to button container
+    const getAnswerContainer = document.getElementById("answer-container");
+    getAnswerContainer.addEventListener("click", isCorrect);
+  } else {
+    console.log("Questions finished");
+  }
 };
 
 const getQuestion = () => {
   // get next question number
-  questionNumber++;
+
   currentQuestion = questions[questionNumber - 1].question;
   // get question and add it to HTML element
   const questionText = document.getElementById("question-text");
