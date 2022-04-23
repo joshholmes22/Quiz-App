@@ -57,7 +57,7 @@ body {
 .answer-container {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 20%;
   margin: auto;
 }
 
@@ -71,7 +71,7 @@ body {
 
   /* responsive styling */
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1100px) {
   .quiz-container {
     width: 90%;
   }
@@ -83,5 +83,8 @@ body {
   }
   .header {
     width: 100%;
+  }
+  .answer-container {
+    width: 50%;
   }
 }
