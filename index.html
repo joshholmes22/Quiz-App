@@ -12,16 +12,27 @@
     <div class="quiz-container">
         <!-- header section -->
         <header class="header">
-            <div>View Highscores</div>
+            <button class="highscores">View Highscores</button>
             <div>
                 Time: 0
             </div>
         </header>
         <!-- main section -->
         <main class="main-section">
-            <h1 class="title">Coding Quiz Challenge</h1>
-            <p class="description">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-            <button class="btn" id="start-quiz">Start Quiz</button>
+            <section class="title-screen ">
+                <h1 class="title">Coding Quiz Challenge</h1>
+                <p class="description">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+                <button class="btn" id="start-quiz">Start Quiz</button>
+            </section>
+            <section class="question-screen">
+                <h2 class="question">Question placeholder</h2>
+                <div class="answer-container">
+                    <button class="answer btn">Answer 1</button>
+                    <button class="answer btn">Answer 2</button>
+                    <button class="answer btn">Answer 3</button>
+                    <button class="answer btn">Answer 4</button>
+                </div>
+            </section>
         </main>
     </div>
     <script src="./assets/js/index.js"></script>
