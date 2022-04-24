@@ -14,11 +14,15 @@ const homeBtn = document.getElementById("home-btn");
 const clearBtn = document.getElementById("clear-btn");
 const viewScoresBtn = document.getElementById("view-scores-btn");
 
+// variables
+const timerAmount = 60;
+const scoreAmount = 100;
+
 // game constants
 let questionNumber = 0;
 let score = 0;
 let highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
-let timer = 10;
+let timer = timerAmount;
 let timeRemaining = true;
 let timing = null;
 let timerStarted = false;
@@ -73,6 +77,7 @@ const getCurrentAnswers = () => {
     // create answer buttons
     const answer = document.createElement("button");
     answer.setAttribute("class", "answer btn");
+    answer.setAttribute("id", i);
     currentAnswers = questions[questionNumber - 1].answers;
     answer.textContent = currentAnswers[i].text;
     answer.setAttribute("data-answer", currentAnswers[i].correct);
@@ -85,11 +90,29 @@ const isCorrect = (event) => {
   const isAnswerCorrect = target.getAttribute("data-answer");
 
   if (isAnswerCorrect === "true") {
-    score += 100;
-    loadNextQuestion();
+    score += scoreAmount;
+    target.classList.add("btn-correct");
+    target.classList.remove("btn");
+    setTimeout(loadNextQuestion, 500);
   } else {
-    loadNextQuestion();
+    target.classList.add("btn-incorrect");
+    target.classList.remove("btn");
+    correctAnswer = findCorrectAnswer();
+    const correctButton = document.getElementById(correctAnswer);
+    correctButton.classList.add("btn-correct");
+    correctButton.classList.remove("btn");
+    setTimeout(loadNextQuestion, 500);
   }
+};
+
+const findCorrectAnswer = () => {
+  const allAnswers = questions[questionNumber - 1].answers;
+  for (let i = 0; i < allAnswers.length; i++) {
+    if (allAnswers[i].correct) {
+      return i;
+    }
+  }
+  console.log(allAnswers);
 };
 
 const loadNextQuestion = () => {
@@ -149,7 +172,7 @@ const goHome = () => {
   questionNumber = 0;
   score = 0;
   timerStarted = false;
-  timer = 10;
+  timer = timerAmount;
 };
 
 // if high scores button is pressed, display high scores screen
@@ -187,7 +210,9 @@ const displayHighScores = () => {
     for (let i = 0; i < highScoreArray.length; i++) {
       const scoreItem = document.createElement("li");
       scoreItem.textContent =
-        highScoreArray[i].initials + " - " + highScoreArray[i].score;
+        highScoreArray[i].initials.toUpperCase() +
+        " - " +
+        highScoreArray[i].score;
       scoreList.appendChild(scoreItem);
     }
   }

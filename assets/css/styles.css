@@ -52,6 +52,24 @@ body {
     border-radius: 4px;
 }
 
+.btn-correct {
+  background-color: #2ae92a;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.btn-incorrect {
+  background-color: #ff1d1d;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
 .btn:hover {
   background-color: #6542ff;
   cursor: pointer;
