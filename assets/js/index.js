@@ -5,6 +5,7 @@ const questionScreen = document.getElementById("question-screen");
 const gameOverScreen = document.getElementById("game-over-screen");
 const highScoreScreen = document.getElementById("high-score-screen");
 const highScoreError = document.getElementById("high-score-error");
+const timerItem = document.getElementById("timer");
 
 // target buttons
 const startBtn = document.getElementById("start-btn");
@@ -17,6 +18,7 @@ const viewScoresBtn = document.getElementById("view-scores-btn");
 let questionNumber = 0;
 let score = 0;
 let highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
+let timer = 60;
 
 // start quiz
 const startQuiz = () => {
@@ -29,15 +31,22 @@ const startQuiz = () => {
 
 const displayQuestions = () => {
   // check if there are questions left and display question with answers
+  const timing = setInterval(startTimer, 1000);
   questionNumber++;
-  if (questionNumber <= questions.length) {
+  if (questionNumber <= questions.length && timer > 0) {
     getCurrentQuestion();
     getCurrentAnswers();
     const getAnswerContainer = document.getElementById("answer-container");
     getAnswerContainer.addEventListener("click", isCorrect);
   } else {
+    clearTimeout(timer);
     gameOver();
   }
+};
+
+const startTimer = () => {
+  timer--;
+  timerItem.innerHTML = "Time Remaining: " + timer;
 };
 
 const getCurrentQuestion = () => {
