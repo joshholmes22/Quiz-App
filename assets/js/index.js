@@ -18,7 +18,10 @@ const viewScoresBtn = document.getElementById("view-scores-btn");
 let questionNumber = 0;
 let score = 0;
 let highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
-let timer = 60;
+let timer = 10;
+let timeRemaining = true;
+let timing = null;
+let timerStarted = false;
 
 // start quiz
 const startQuiz = () => {
@@ -31,15 +34,18 @@ const startQuiz = () => {
 
 const displayQuestions = () => {
   // check if there are questions left and display question with answers
-  const timing = setInterval(startTimer, 1000);
+  timerItem.classList.remove("hide");
+  if (!timerStarted) {
+    timing = setInterval(startTimer, 1000);
+    timerStarted = true;
+  }
   questionNumber++;
-  if (questionNumber <= questions.length && timer > 0) {
+  if (questionNumber <= questions.length && timeRemaining) {
     getCurrentQuestion();
     getCurrentAnswers();
     const getAnswerContainer = document.getElementById("answer-container");
     getAnswerContainer.addEventListener("click", isCorrect);
   } else {
-    clearTimeout(timer);
     gameOver();
   }
 };
@@ -47,6 +53,9 @@ const displayQuestions = () => {
 const startTimer = () => {
   timer--;
   timerItem.innerHTML = "Time Remaining: " + timer;
+  if (timer <= 0) {
+    gameOver();
+  }
 };
 
 const getCurrentQuestion = () => {
@@ -99,6 +108,7 @@ const loadNextQuestion = () => {
 // when questions finished - display form to enter initials
 
 const gameOver = () => {
+  clearTimeout(timing);
   document.querySelector('input[name="initials"]').value = "";
   gameOverScreen.classList.remove("hide");
   questionScreen.classList.add("hide");
@@ -131,11 +141,15 @@ const onFormSubmit = (event) => {
 // have options to clear highscores or go back to home
 
 const goHome = () => {
+  clearAnswers();
   highScoreScreen.classList.add("hide");
   header.classList.remove("hide");
   titleScreen.classList.remove("hide");
+  timerItem.classList.add("hide");
   questionNumber = 0;
   score = 0;
+  timerStarted = false;
+  timer = 10;
 };
 
 // if high scores button is pressed, display high scores screen
@@ -146,13 +160,18 @@ const viewHighScores = () => {
     titleScreen.classList.add("hide");
   } else if (!questionScreen.classList.contains("hide")) {
     questionScreen.classList.add("hide");
-    const currentAnswers = document.getElementById("answer-container");
-    while (currentAnswers.firstChild) {
-      currentAnswers.removeChild(currentAnswers.firstChild);
-    }
+    clearAnswers();
   }
   highScoreScreen.classList.remove("hide");
   displayHighScores();
+};
+
+// clear answers
+const clearAnswers = () => {
+  const currentAnswers = document.getElementById("answer-container");
+  while (currentAnswers.firstChild) {
+    currentAnswers.removeChild(currentAnswers.firstChild);
+  }
 };
 
 // display high scores from local storage
