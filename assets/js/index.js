@@ -1,3 +1,27 @@
+// get screens
+const header = document.getElementById("header");
+const titleScreen = document.getElementById("title-screen");
+const questionScreen = document.getElementById("question-screen");
+const gameOverScreen = document.getElementById("game-over-screen");
+const highScoreScreen = document.getElementById("high-score-screen");
+
+// target buttons
+const startBtn = document.getElementById("start-btn");
+const initalsForm = document.getElementById("initials-form");
+const homeBtn = document.getElementById("home-btn");
+const clearBtn = document.getElementById("clear-btn");
+const viewScoresBtn = document.getElementById("view-scores-btn");
+
+// click event listeners
+startBtn.addEventListener("click");
+initalsForm.addEventListener("submit");
+homeBtn.addEventListener("click");
+clearBtn.addEventListener("click");
+viewScoresBtn.addEventListener("click");
+
+// navigation
+const startQuiz = () => {};
+
 const questions = [
   {
     question: "Question 1 goes here",
