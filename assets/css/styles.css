@@ -69,6 +69,23 @@ body {
   display: none;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: auto;
+}
+
+
+.form-label {
+  text-align: left;
+}
+
+.form-button {
+  width: 60%;
+  margin: 10px auto;
+}
+
   /* responsive styling */
 
 @media screen and (max-width: 1100px) {

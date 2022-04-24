@@ -12,7 +12,7 @@
     <div class="quiz-container">
         <!-- header section -->
         <header class="header">
-            <button class="highscores">View Highscores</button>
+            <button class="highscores btn">View Highscores</button>
             <div>
                 Time: 0
             </div>
@@ -27,6 +27,27 @@
             <section class="question-screen hide" id="question-screen">
                 <h2 class="question" id="question-text">Question placeholder</h2>
                 <div class="answer-container" id="answer-container"></div>
+            </section>
+            <section class="score-screen hide" id="score-screen">
+                <h2>End of Quiz!</h2>
+                <p>Your final score is: 200</p>
+                <form class="form" id="score-form">
+                    <label class="form-label form-child">Record your score: </label>
+                    <input type="text" id="initials" name="initials" class="form-input form-child" placeholder="Enter Initials">
+                    <input type="submit" value="Submit" class="btn form-button form-child">
+                </form>
+            </section>
+            <section class="hide">
+                <h2>Highscores</h2>
+                <ol>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ol>
+                <button>Go Back</button>
+                <button>Clear Highscores</button>
             </section>
         </main>
     </div>

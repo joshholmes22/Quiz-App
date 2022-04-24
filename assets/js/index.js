@@ -1,21 +1,19 @@
 //target buttons
 const startButton = document.getElementById("start-quiz");
+const scoreForm = document.getElementById("score-form");
 
 // game constants
 let questionNumber = 0;
 let score = 0;
 
 const startQuiz = () => {
-  // get title screen
+  // hide title and show questions
   const titleScreen = document.getElementById("title-screen");
-  // hide title screen
   titleScreen.classList.add("hide");
-  // get question screen
+
   const questionScreen = document.getElementById("question-screen");
-  // show questions
   questionScreen.classList.remove("hide");
 
-  // display question
   displayQuestion();
 };
 
@@ -26,19 +24,19 @@ const displayQuestion = () => {
   if (questionNumber <= questions.length) {
     getQuestion();
     getAnswers();
-    // add listener to button container
     const getAnswerContainer = document.getElementById("answer-container");
     getAnswerContainer.addEventListener("click", isCorrect);
   } else {
     console.log("Questions finished");
+    showScore();
   }
 };
 
 const getQuestion = () => {
-  // get next question number
+  // get question and add it to HTML element
 
   currentQuestion = questions[questionNumber - 1].question;
-  // get question and add it to HTML element
+
   const questionText = document.getElementById("question-text");
   questionText.textContent = currentQuestion;
 };
@@ -48,16 +46,12 @@ const getAnswers = () => {
   const answerContainer = document.getElementById("answer-container");
 
   for (let i = 0; i < 4; i++) {
-    // create button
+    // create answer buttons
     const answer = document.createElement("button");
-    // add styling
     answer.setAttribute("class", "answer btn");
-    // get answer array
     currentAnswers = questions[questionNumber - 1].answers;
-    // add answer text to button
     answer.textContent = currentAnswers[i].text;
     answer.setAttribute("data-answer", currentAnswers[i].correct);
-    // append to section
     answerContainer.append(answer);
   }
 };
@@ -67,7 +61,9 @@ const isCorrect = (event) => {
   const isAnswerCorrect = target.getAttribute("data-answer");
 
   if (isAnswerCorrect === "true") {
-    console.log("Correct Answer!");
+    score += 100;
+    loadNextQuestion();
+    console.log(score);
   } else {
     loadNextQuestion();
   }
@@ -84,6 +80,20 @@ const loadNextQuestion = () => {
   nextAnswer.setAttribute("id", "answer-container");
   answerSection.append(nextAnswer);
   displayQuestion();
+};
+
+const showScore = () => {
+  // get score entry
+  const scoreScreen = document.getElementById("score-screen");
+  const questionScreen = document.getElementById("question-screen");
+  scoreScreen.removeAttribute("class", "hide");
+  questionScreen.setAttribute("class", "hide");
+};
+
+const updateHighscore = (event) => {
+  event.preventDefault();
+  const initialsInput = document.querySelector('input[name="initials"]');
+  const initials = initialsInput.value;
 };
 
 const questions = [
@@ -127,3 +137,4 @@ const questions = [
 
 // add click event listener
 startButton.addEventListener("click", startQuiz);
+scoreForm.addEventListener("submit", updateHighscore);
