@@ -35,7 +35,7 @@ const displayQuestions = () => {
     const getAnswerContainer = document.getElementById("answer-container");
     getAnswerContainer.addEventListener("click", isCorrect);
   } else {
-    console.log("Questions finished");
+    gameOver();
   }
 };
 
@@ -89,11 +89,60 @@ const loadNextQuestion = () => {
 
 // when questions finished - display form to enter initials
 
+const gameOver = () => {
+  gameOverScreen.classList.remove("hide");
+  questionScreen.classList.add("hide");
+  const userScoreText = document.getElementById("display-final-score");
+  userScoreText.innerHTML = "Your final score is: " + score;
+};
+
+const onFormSubmit = (event) => {
+  event.preventDefault();
+  const formInput = document.querySelector('input[name="initials"]');
+  const userInitials = formInput.value;
+  const newScore = {
+    score: score,
+    initials: userInitials,
+  };
+  highScoreArray.push(newScore);
+  highScoreArray.sort((a, b) => b.score - a.score);
+  highScoreArray.splice(5);
+  localStorage.setItem("highScores", JSON.stringify(highScoreArray));
+
+  gameOverScreen.classList.add("hide");
+  header.classList.add("hide");
+  highScoreScreen.classList.remove("hide");
+};
+
 // when form submitted - display highscores
 
 // have options to clear highscores or go back to home
 
+const goHome = () => {
+  highScoreScreen.classList.add("hide");
+  header.classList.remove("hide");
+  titleScreen.classList.remove("hide");
+  questionNumber = 0;
+  score = 0;
+};
+
 // if high scores button is pressed, display high scores screen
+
+const viewHighScores = () => {
+  header.classList.add("hide");
+  if (!titleScreen.classList.contains("hide")) {
+    titleScreen.classList.add("hide");
+  } else if (!questionScreen.classList.contains("hide")) {
+    questionScreen.classList.add("hide");
+    const currentAnswers = document.getElementById("answer-container");
+    while (currentAnswers.firstChild) {
+      currentAnswers.removeChild(currentAnswers.firstChild);
+    }
+  } else {
+    console.log("didn't work");
+  }
+  highScoreScreen.classList.remove("hide");
+};
 
 const questions = [
   {
@@ -136,7 +185,7 @@ const questions = [
 
 // click event listeners
 startBtn.addEventListener("click", startQuiz);
-// initalsForm.addEventListener("submit");
-// homeBtn.addEventListener("click");
+initalsForm.addEventListener("submit", onFormSubmit);
+homeBtn.addEventListener("click", goHome);
 // clearBtn.addEventListener("click");
-// viewScoresBtn.addEventListener("click");
+viewScoresBtn.addEventListener("click", viewHighScores);
