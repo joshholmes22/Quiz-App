@@ -12,15 +12,21 @@ const homeBtn = document.getElementById("home-btn");
 const clearBtn = document.getElementById("clear-btn");
 const viewScoresBtn = document.getElementById("view-scores-btn");
 
-// click event listeners
-startBtn.addEventListener("click");
-initalsForm.addEventListener("submit");
-homeBtn.addEventListener("click");
-clearBtn.addEventListener("click");
-viewScoresBtn.addEventListener("click");
+// start quiz
+const startQuiz = () => {
+  titleScreen.setAttribute("class", "hide");
+  questionScreen.removeAttribute("class");
+};
 
-// navigation
-const startQuiz = () => {};
+// display questions
+
+// when questions finished - display form to enter initials
+
+// when form submitted - display highscores
+
+// have options to clear highscores or go back to home
+
+// if high scores button is pressed, display high scores screen
 
 const questions = [
   {
@@ -60,3 +66,10 @@ const questions = [
     ],
   },
 ];
+
+// click event listeners
+startBtn.addEventListener("click", startQuiz);
+initalsForm.addEventListener("submit");
+homeBtn.addEventListener("click");
+clearBtn.addEventListener("click");
+viewScoresBtn.addEventListener("click");
