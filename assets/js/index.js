@@ -102,13 +102,22 @@ const updateHighScore = (event) => {
   highScores.push(newScore);
   highScores.sort((a, b) => b.score - a.score);
   highScores.splice(5);
-  console.log(highScores);
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  storeHighScores();
 };
 
-const displayHighScores = () => {
+const storeHighScores = () => {
   const scoreScreen = document.getElementById("score-screen");
   scoreScreen.setAttribute("class", "hide");
-  sortHighScore();
+  const highScoreScreen = document.getElementById("high-scores");
+  highScoreScreen.removeAttribute("class", "hide");
+  const scoreList = document.getElementById("score-list");
+
+  for (let i = 0; i < highScores.length; i++) {
+    const scoreItem = document.createElement("li");
+    scoreItem.textContent = highScores[i].initials + highScores[i].score;
+    scoreList.appendChild(scoreItem);
+  }
 };
 
 const questions = [
