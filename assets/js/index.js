@@ -1,6 +1,7 @@
 //target buttons
 const startButton = document.getElementById("start-quiz");
 const scoreForm = document.getElementById("score-form");
+const clearStorage = document.getElementById("clear-storage");
 
 // game constants
 let questionNumber = 0;
@@ -89,6 +90,8 @@ const showScore = () => {
   const questionScreen = document.getElementById("question-screen");
   scoreScreen.removeAttribute("class", "hide");
   questionScreen.setAttribute("class", "hide");
+  const userScoreText = document.getElementById("display-final-score");
+  userScoreText.innerHTML = "Your final score is: " + score;
 };
 
 const updateHighScore = (event) => {
@@ -115,8 +118,17 @@ const storeHighScores = () => {
 
   for (let i = 0; i < highScores.length; i++) {
     const scoreItem = document.createElement("li");
-    scoreItem.textContent = highScores[i].initials + highScores[i].score;
+    scoreItem.textContent =
+      highScores[i].initials + " - " + highScores[i].score;
     scoreList.appendChild(scoreItem);
+  }
+};
+
+const clearHighScores = () => {
+  localStorage.clear();
+  const scoreList = document.getElementById("score-list");
+  while (scoreList.firstChild) {
+    scoreList.removeChild(scoreList.firstChild);
   }
 };
 
@@ -162,3 +174,4 @@ const questions = [
 // add click event listener
 startButton.addEventListener("click", startQuiz);
 scoreForm.addEventListener("submit", updateHighScore);
+clearStorage.addEventListener("click", clearHighScores);

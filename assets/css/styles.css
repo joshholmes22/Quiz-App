@@ -52,6 +52,11 @@ body {
     border-radius: 4px;
 }
 
+.btn:hover {
+  background-color: #6542ff;
+  cursor: pointer;
+}
+
 /* questions & answers */
 
 .answer-container {
@@ -84,6 +89,11 @@ body {
 .form-button {
   width: 60%;
   margin: 10px auto;
+}
+
+.score-list {
+  width: 20%;
+  margin: 20px auto;
 }
 
   /* responsive styling */

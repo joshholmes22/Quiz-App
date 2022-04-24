@@ -30,7 +30,7 @@
             </section>
             <section class="score-screen hide" id="score-screen">
                 <h2>End of Quiz!</h2>
-                <p>Your final score is: 200</p>
+                <p id="display-final-score">Your final score is:</p>
                 <form class="form" id="score-form">
                     <label class="form-label form-child">Record your score: </label>
                     <input type="text" id="initials" name="initials" class="form-input form-child" placeholder="Enter Initials">
@@ -41,8 +41,8 @@
                 <h2>Highscores</h2>
                 <ol class="score-list" id="score-list">
                 </ol>
-                <button>Go Back</button>
-                <button>Clear Highscores</button>
+                <button class="btn">Play Again</button>
+                <button class="btn" id="clear-storage">Clear Highscores</button>
             </section>
         </main>
     </div>
