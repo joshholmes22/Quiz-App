@@ -15,7 +15,7 @@ const viewScoresBtn = document.getElementById("view-scores-btn");
 // game constants
 let questionNumber = 0;
 let score = 0;
-const highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
+let highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
 
 // start quiz
 const startQuiz = () => {
@@ -68,7 +68,6 @@ const isCorrect = (event) => {
   if (isAnswerCorrect === "true") {
     score += 100;
     loadNextQuestion();
-    console.log(score);
   } else {
     loadNextQuestion();
   }
@@ -112,6 +111,8 @@ const onFormSubmit = (event) => {
   gameOverScreen.classList.add("hide");
   header.classList.add("hide");
   highScoreScreen.classList.remove("hide");
+
+  displayHighScores();
 };
 
 // when form submitted - display highscores
@@ -138,10 +139,39 @@ const viewHighScores = () => {
     while (currentAnswers.firstChild) {
       currentAnswers.removeChild(currentAnswers.firstChild);
     }
-  } else {
-    console.log("didn't work");
   }
   highScoreScreen.classList.remove("hide");
+  displayHighScores();
+};
+
+// display high scores from local storage
+const displayHighScores = () => {
+  const scoreList = clearScores();
+
+  for (let i = 0; i < highScoreArray.length; i++) {
+    const scoreItem = document.createElement("li");
+    scoreItem.textContent =
+      highScoreArray[i].initials + " - " + highScoreArray[i].score;
+    scoreList.appendChild(scoreItem);
+  }
+};
+
+// clear scores page
+const clearScores = () => {
+  const scoreList = document.getElementById("score-list");
+
+  while (scoreList.firstChild) {
+    scoreList.removeChild(scoreList.firstChild);
+  }
+
+  return scoreList;
+};
+
+// clear local storage
+const clearLocalStorage = () => {
+  window.localStorage.clear();
+  highScoreArray = [];
+  clearScores();
 };
 
 const questions = [
@@ -187,5 +217,5 @@ const questions = [
 startBtn.addEventListener("click", startQuiz);
 initalsForm.addEventListener("submit", onFormSubmit);
 homeBtn.addEventListener("click", goHome);
-// clearBtn.addEventListener("click");
+clearBtn.addEventListener("click", clearLocalStorage);
 viewScoresBtn.addEventListener("click", viewHighScores);
