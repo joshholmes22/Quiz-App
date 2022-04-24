@@ -5,6 +5,7 @@ const scoreForm = document.getElementById("score-form");
 // game constants
 let questionNumber = 0;
 let score = 0;
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
 const startQuiz = () => {
   // hide title and show questions
@@ -90,10 +91,24 @@ const showScore = () => {
   questionScreen.setAttribute("class", "hide");
 };
 
-const updateHighscore = (event) => {
+const updateHighScore = (event) => {
   event.preventDefault();
   const initialsInput = document.querySelector('input[name="initials"]');
   const initials = initialsInput.value;
+  const newScore = {
+    score: score,
+    initials: initials,
+  };
+  highScores.push(newScore);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores.splice(5);
+  console.log(highScores);
+};
+
+const displayHighScores = () => {
+  const scoreScreen = document.getElementById("score-screen");
+  scoreScreen.setAttribute("class", "hide");
+  sortHighScore();
 };
 
 const questions = [
@@ -137,4 +152,4 @@ const questions = [
 
 // add click event listener
 startButton.addEventListener("click", startQuiz);
-scoreForm.addEventListener("submit", updateHighscore);
+scoreForm.addEventListener("submit", updateHighScore);
