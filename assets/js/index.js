@@ -12,13 +12,80 @@ const homeBtn = document.getElementById("home-btn");
 const clearBtn = document.getElementById("clear-btn");
 const viewScoresBtn = document.getElementById("view-scores-btn");
 
+// game constants
+let questionNumber = 0;
+let score = 0;
+const highScoreArray = JSON.parse(localStorage.getItem("highScores")) || [];
+
 // start quiz
 const startQuiz = () => {
-  titleScreen.setAttribute("class", "hide");
-  questionScreen.removeAttribute("class");
+  titleScreen.classList.add("hide");
+  questionScreen.classList.remove("hide");
+  displayQuestions();
 };
 
 // display questions
+
+const displayQuestions = () => {
+  // check if there are questions left and display question with answers
+  questionNumber++;
+  if (questionNumber <= questions.length) {
+    getCurrentQuestion();
+    getCurrentAnswers();
+    const getAnswerContainer = document.getElementById("answer-container");
+    getAnswerContainer.addEventListener("click", isCorrect);
+  } else {
+    console.log("Questions finished");
+  }
+};
+
+const getCurrentQuestion = () => {
+  currentQuestion = questions[questionNumber - 1].question;
+
+  const questionText = document.getElementById("question-text");
+  questionText.textContent = currentQuestion;
+};
+
+const getCurrentAnswers = () => {
+  // generate and create HTML elements to display answers
+  const answerContainer = document.getElementById("answer-container");
+
+  for (let i = 0; i < 4; i++) {
+    // create answer buttons
+    const answer = document.createElement("button");
+    answer.setAttribute("class", "answer btn");
+    currentAnswers = questions[questionNumber - 1].answers;
+    answer.textContent = currentAnswers[i].text;
+    answer.setAttribute("data-answer", currentAnswers[i].correct);
+    answerContainer.append(answer);
+  }
+};
+
+const isCorrect = (event) => {
+  const target = event.target;
+  const isAnswerCorrect = target.getAttribute("data-answer");
+
+  if (isAnswerCorrect === "true") {
+    score += 100;
+    loadNextQuestion();
+    console.log(score);
+  } else {
+    loadNextQuestion();
+  }
+};
+
+const loadNextQuestion = () => {
+  // find and remove question answer
+  const answerSection = document.getElementById("question-screen");
+  const answerContainer = document.getElementById("answer-container");
+  answerContainer.remove();
+  // create new answer container ready for next question
+  const nextAnswer = document.createElement("div");
+  nextAnswer.setAttribute("class", "answer-container");
+  nextAnswer.setAttribute("id", "answer-container");
+  answerSection.append(nextAnswer);
+  displayQuestions();
+};
 
 // when questions finished - display form to enter initials
 
@@ -69,7 +136,7 @@ const questions = [
 
 // click event listeners
 startBtn.addEventListener("click", startQuiz);
-initalsForm.addEventListener("submit");
-homeBtn.addEventListener("click");
-clearBtn.addEventListener("click");
-viewScoresBtn.addEventListener("click");
+// initalsForm.addEventListener("submit");
+// homeBtn.addEventListener("click");
+// clearBtn.addEventListener("click");
+// viewScoresBtn.addEventListener("click");
