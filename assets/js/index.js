@@ -4,6 +4,7 @@ const titleScreen = document.getElementById("title-screen");
 const questionScreen = document.getElementById("question-screen");
 const gameOverScreen = document.getElementById("game-over-screen");
 const highScoreScreen = document.getElementById("high-score-screen");
+const highScoreError = document.getElementById("high-score-error");
 
 // target buttons
 const startBtn = document.getElementById("start-btn");
@@ -89,6 +90,7 @@ const loadNextQuestion = () => {
 // when questions finished - display form to enter initials
 
 const gameOver = () => {
+  document.querySelector('input[name="initials"]').value = "";
   gameOverScreen.classList.remove("hide");
   questionScreen.classList.add("hide");
   const userScoreText = document.getElementById("display-final-score");
@@ -148,11 +150,18 @@ const viewHighScores = () => {
 const displayHighScores = () => {
   const scoreList = clearScores();
 
-  for (let i = 0; i < highScoreArray.length; i++) {
-    const scoreItem = document.createElement("li");
-    scoreItem.textContent =
-      highScoreArray[i].initials + " - " + highScoreArray[i].score;
-    scoreList.appendChild(scoreItem);
+  if (highScoreArray.length === 0) {
+    highScoreError.classList.remove("hide");
+  } else {
+    if (!highScoreError.classList.contains("hide")) {
+      highScoreError.classList.add("hide");
+    }
+    for (let i = 0; i < highScoreArray.length; i++) {
+      const scoreItem = document.createElement("li");
+      scoreItem.textContent =
+        highScoreArray[i].initials + " - " + highScoreArray[i].score;
+      scoreList.appendChild(scoreItem);
+    }
   }
 };
 
@@ -169,6 +178,7 @@ const clearScores = () => {
 
 // clear local storage
 const clearLocalStorage = () => {
+  highScoreError.classList.remove("hide");
   window.localStorage.clear();
   highScoreArray = [];
   clearScores();
