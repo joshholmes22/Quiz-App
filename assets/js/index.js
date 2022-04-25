@@ -29,32 +29,51 @@ let timing = null;
 let timerStarted = false;
 let questions = [];
 
-// get questions
+// get questions from API
+const getAPIQuestions = () => {
+  fetch("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")
+    .then((result) => {
+      return result.json();
+    })
+    .then((loadedQuestions) => {
+      questions = loadedQuestions.results.map((loadedQuestions) => {
+        const formattedQuestions = {
+          question: loadedQuestions.question,
+          answers: [
+            { text: loadedQuestions.correct_answer, correct: true },
+            { text: loadedQuestions.incorrect_answers[0], correct: false },
+            { text: loadedQuestions.incorrect_answers[1], correct: false },
+            { text: loadedQuestions.incorrect_answers[2], correct: false },
+          ],
+        };
+        shuffleAnswers(formattedQuestions.answers);
 
-fetch("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")
-  .then((result) => {
-    return result.json();
-  })
-  .then((loadedQuestions) => {
-    questions = loadedQuestions.results.map((loadedQuestions) => {
-      const formattedQuestions = {
-        question: loadedQuestions.question,
-        answers: [
-          { text: loadedQuestions.correct_answer, correct: true },
-          { text: loadedQuestions.incorrect_answers[0], correct: false },
-          { text: loadedQuestions.incorrect_answers[1], correct: false },
-          { text: loadedQuestions.incorrect_answers[2], correct: false },
-        ],
-      };
-      shuffleAnswers(formattedQuestions.answers);
-      return formattedQuestions;
+        return formattedQuestions;
+      });
+      startQuiz();
+    })
+    .catch((err) => {
+      console.error(err);
     });
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+};
 
-const shuffleAnswers = (answersArray) => {};
+// randomise answers
+const shuffleAnswers = (answersArray) => {
+  console.log(answersArray);
+  for (let i = 0; i < answersArray.length; i++) {
+    let currentIndex = answersArray.length,
+      randomIndex;
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [answersArray[currentIndex], answersArray[randomIndex]] = [
+        answersArray[randomIndex],
+        answersArray[currentIndex],
+      ];
+    }
+  }
+  return answersArray;
+};
 
 // start quiz
 const startQuiz = () => {
@@ -64,7 +83,6 @@ const startQuiz = () => {
 };
 
 // display questions
-
 const displayQuestions = () => {
   // check if there are questions left and display question with answers
   timerItem.classList.remove("hide");
@@ -84,6 +102,7 @@ const displayQuestions = () => {
   }
 };
 
+// begin timer
 const startTimer = () => {
   timer--;
   timerItem.innerHTML = "Time Remaining: " + timer;
@@ -92,6 +111,7 @@ const startTimer = () => {
   }
 };
 
+// get current question
 const getCurrentQuestion = () => {
   currentQuestion = questions[questionNumber - 1].question;
 
@@ -99,6 +119,7 @@ const getCurrentQuestion = () => {
   questionText.textContent = currentQuestion;
 };
 
+// get current answers
 const getCurrentAnswers = () => {
   // generate and create HTML elements to display answers
   const answerContainer = document.getElementById("answer-container");
@@ -115,6 +136,7 @@ const getCurrentAnswers = () => {
   }
 };
 
+// check if answer is correct
 const isCorrect = (event) => {
   const target = event.target;
   const isAnswerCorrect = target.getAttribute("data-answer");
@@ -136,6 +158,7 @@ const isCorrect = (event) => {
   }
 };
 
+// if wrong, find correct answer
 const findCorrectAnswer = () => {
   const allAnswers = questions[questionNumber - 1].answers;
   for (let i = 0; i < allAnswers.length; i++) {
@@ -145,6 +168,7 @@ const findCorrectAnswer = () => {
   }
 };
 
+// load next question
 const loadNextQuestion = () => {
   // find and remove question answer
   const answerSection = document.getElementById("question-screen");
@@ -159,7 +183,6 @@ const loadNextQuestion = () => {
 };
 
 // when questions finished - display form to enter initials
-
 const gameOver = () => {
   clearTimeout(timing);
   document.querySelector('input[name="initials"]').value = "";
@@ -170,6 +193,7 @@ const gameOver = () => {
   userScoreText.innerHTML = "Your final score is: " + score;
 };
 
+// submit user input and sort high score list
 const onFormSubmit = (event) => {
   event.preventDefault();
   const formInput = document.querySelector('input[name="initials"]');
@@ -190,10 +214,7 @@ const onFormSubmit = (event) => {
   displayHighScores();
 };
 
-// when form submitted - display highscores
-
-// have options to clear highscores or go back to home
-
+// return to beginning screen
 const goHome = () => {
   clearAnswers();
   highScoreScreen.classList.add("hide");
@@ -207,7 +228,6 @@ const goHome = () => {
 };
 
 // if high scores button is pressed, display high scores screen
-
 const viewHighScores = () => {
   clearTimeout(timing);
   header.classList.add("hide");
@@ -253,7 +273,6 @@ const displayHighScores = () => {
 // clear scores page
 const clearScores = () => {
   const scoreList = document.getElementById("score-list");
-
   while (scoreList.firstChild) {
     scoreList.removeChild(scoreList.firstChild);
   }
@@ -269,47 +288,8 @@ const clearLocalStorage = () => {
   clearScores();
 };
 
-const oldQuestions = [
-  {
-    question: "Question 1 goes here",
-    answers: [
-      { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
-      { text: "right", correct: true },
-      { text: "wrong", correct: false },
-    ],
-  },
-  {
-    question: "Question 2 goes here",
-    answers: [
-      { text: "right", correct: true },
-      { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
-    ],
-  },
-  {
-    question: "Question 3 goes here",
-    answers: [
-      { text: "wrong", correct: false },
-      { text: "right", correct: true },
-      { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
-    ],
-  },
-  {
-    question: "Question 4 goes here",
-    answers: [
-      { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
-      { text: "wrong", correct: false },
-      { text: "right", correct: true },
-    ],
-  },
-];
-
 // click event listeners
-startBtn.addEventListener("click", startQuiz);
+startBtn.addEventListener("click", getAPIQuestions);
 initalsForm.addEventListener("submit", onFormSubmit);
 homeBtn.addEventListener("click", goHome);
 clearBtn.addEventListener("click", clearLocalStorage);
