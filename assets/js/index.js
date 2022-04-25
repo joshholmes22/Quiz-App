@@ -15,7 +15,8 @@ const clearBtn = document.getElementById("clear-btn");
 const viewScoresBtn = document.getElementById("view-scores-btn");
 
 // variables
-const timerAmount = 60;
+const timerAmount = 25;
+const timePenalty = 10;
 const scoreAmount = 100;
 
 // game constants
@@ -40,6 +41,7 @@ const displayQuestions = () => {
   // check if there are questions left and display question with answers
   timerItem.classList.remove("hide");
   if (!timerStarted) {
+    timerItem.innerHTML = "Time Remaining: " + timerAmount;
     timing = setInterval(startTimer, 1000);
     timerStarted = true;
   }
@@ -95,6 +97,7 @@ const isCorrect = (event) => {
     target.classList.remove("btn");
     setTimeout(loadNextQuestion, 500);
   } else {
+    timer -= timePenalty;
     target.classList.add("btn-incorrect");
     target.classList.remove("btn");
     correctAnswer = findCorrectAnswer();
@@ -112,7 +115,6 @@ const findCorrectAnswer = () => {
       return i;
     }
   }
-  console.log(allAnswers);
 };
 
 const loadNextQuestion = () => {
@@ -135,6 +137,7 @@ const gameOver = () => {
   document.querySelector('input[name="initials"]').value = "";
   gameOverScreen.classList.remove("hide");
   questionScreen.classList.add("hide");
+  header.classList.add("hide");
   const userScoreText = document.getElementById("display-final-score");
   userScoreText.innerHTML = "Your final score is: " + score;
 };
@@ -178,6 +181,7 @@ const goHome = () => {
 // if high scores button is pressed, display high scores screen
 
 const viewHighScores = () => {
+  clearTimeout(timing);
   header.classList.add("hide");
   if (!titleScreen.classList.contains("hide")) {
     titleScreen.classList.add("hide");
