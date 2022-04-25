@@ -15,7 +15,7 @@ const clearBtn = document.getElementById("clear-btn");
 const viewScoresBtn = document.getElementById("view-scores-btn");
 
 // variables
-const timerAmount = 25;
+const timerAmount = 60;
 const timePenalty = 10;
 const scoreAmount = 100;
 
@@ -27,6 +27,34 @@ let timer = timerAmount;
 let timeRemaining = true;
 let timing = null;
 let timerStarted = false;
+let questions = [];
+
+// get questions
+
+fetch("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")
+  .then((result) => {
+    return result.json();
+  })
+  .then((loadedQuestions) => {
+    questions = loadedQuestions.results.map((loadedQuestions) => {
+      const formattedQuestions = {
+        question: loadedQuestions.question,
+        answers: [
+          { text: loadedQuestions.correct_answer, correct: true },
+          { text: loadedQuestions.incorrect_answers[0], correct: false },
+          { text: loadedQuestions.incorrect_answers[1], correct: false },
+          { text: loadedQuestions.incorrect_answers[2], correct: false },
+        ],
+      };
+      shuffleAnswers(formattedQuestions.answers);
+      return formattedQuestions;
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+const shuffleAnswers = (answersArray) => {};
 
 // start quiz
 const startQuiz = () => {
@@ -241,7 +269,7 @@ const clearLocalStorage = () => {
   clearScores();
 };
 
-const questions = [
+const oldQuestions = [
   {
     question: "Question 1 goes here",
     answers: [
