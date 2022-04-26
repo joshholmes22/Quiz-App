@@ -30,6 +30,10 @@ body {
       width: 50%;
   }
 
+  .timer {
+    align-self: center;
+  }
+
   /* main section */
 
 .main-section {
@@ -88,6 +92,10 @@ body {
   margin: 5px;
 }
 
+.question {
+  line-height: 25px;
+}
+
 .hide {
   display: none;
 }
@@ -116,7 +124,7 @@ body {
 
   /* responsive styling */
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1000px) {
   .quiz-container {
     width: 90%;
   }
@@ -132,4 +140,27 @@ body {
   .answer-container {
     width: 50%;
   }
+  .score-list{
+    width: 40%;
+  }
+  .form {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .score-list{
+    width: 40%;
+  }
+  .quiz-container {
+    margin: 50px auto;
+  }
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .highscores {
+    margin: 8px;
+  }
+
 }

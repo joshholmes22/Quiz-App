@@ -47,7 +47,7 @@ const getAPIQuestions = () => {
           ],
         };
         shuffleAnswers(formattedQuestions.answers);
-
+        formatQuestions(formattedQuestions.question);
         return formattedQuestions;
       });
       startQuiz();
@@ -74,6 +74,9 @@ const shuffleAnswers = (answersArray) => {
   }
   return answersArray;
 };
+
+// format question text
+const formatQuestions = () => {};
 
 // start quiz
 const startQuiz = () => {
