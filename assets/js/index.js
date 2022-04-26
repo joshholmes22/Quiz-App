@@ -47,7 +47,7 @@ const getAPIQuestions = () => {
           ],
         };
         shuffleAnswers(formattedQuestions.answers);
-        formatQuestions(formattedQuestions.question);
+        formattedQuestions.question = formatText(formattedQuestions.question);
         return formattedQuestions;
       });
       startQuiz();
@@ -59,8 +59,8 @@ const getAPIQuestions = () => {
 
 // randomise answers
 const shuffleAnswers = (answersArray) => {
-  console.log(answersArray);
   for (let i = 0; i < answersArray.length; i++) {
+    answersArray[i].text = formatText(answersArray[i].text);
     let currentIndex = answersArray.length,
       randomIndex;
     while (currentIndex != 0) {
@@ -76,7 +76,15 @@ const shuffleAnswers = (answersArray) => {
 };
 
 // format question text
-const formatQuestions = () => {};
+const formatText = (text) => {
+  if (text.includes("#039;")) {
+    text = text.replace(/&#039;/gi, "'");
+  }
+  if (text.includes("&quot;")) {
+    text = text.replace(/&quot;/gi, '"');
+  }
+  return text;
+};
 
 // start quiz
 const startQuiz = () => {
