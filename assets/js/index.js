@@ -31,6 +31,7 @@ let questions = [];
 
 // get questions from API
 const getAPIQuestions = () => {
+  startBtn.classList.add("hide");
   fetch("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple")
     .then((result) => {
       return result.json();
@@ -90,6 +91,7 @@ const formatText = (text) => {
 const startQuiz = () => {
   titleScreen.classList.add("hide");
   questionScreen.classList.remove("hide");
+  startBtn.classList.remove("hide");
   displayQuestions();
 };
 
@@ -107,7 +109,7 @@ const displayQuestions = () => {
     getCurrentQuestion();
     getCurrentAnswers();
     const getAnswerContainer = document.getElementById("answer-container");
-    getAnswerContainer.addEventListener("click", isCorrect);
+    //getAnswerContainer.addEventListener("click", isCorrect);
   } else {
     gameOver();
   }
@@ -143,6 +145,7 @@ const getCurrentAnswers = () => {
     currentAnswers = questions[questionNumber - 1].answers;
     answer.textContent = currentAnswers[i].text;
     answer.setAttribute("data-answer", currentAnswers[i].correct);
+    answer.addEventListener("click", isCorrect);
     answerContainer.append(answer);
   }
 };
