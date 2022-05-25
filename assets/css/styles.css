@@ -1,0 +1,166 @@
+/* general styling */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    line-height: 20px;
+    background-color: #121212;
+  }
+
+  /* quiz card */
+
+  .quiz-container {
+    background-color: #e4e4e4;
+    width: 70%;
+    margin: 100px auto;
+    padding-bottom: 80px;
+    border-radius: 10px;
+  }
+
+  /* header section */
+
+.header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: auto;
+      padding: 30px;
+      width: 50%;
+  }
+
+  .timer {
+    align-self: center;
+  }
+
+  /* main section */
+
+.main-section {
+    text-align: center;
+    padding: 20px;
+    margin: auto;
+}
+
+.description {
+    width: 30%;
+    margin: 25px auto 20px;
+}
+
+.btn {
+    border: none;
+    padding: 10px 20px;
+    background-color: #896eff;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.btn-correct {
+  background-color: #2ae92a;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.btn-incorrect {
+  background-color: #ff1d1d;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background-color: #6542ff;
+  cursor: pointer;
+}
+
+/* questions & answers */
+
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: auto;
+}
+
+.answer {
+  margin: 5px;
+}
+
+.question {
+  line-height: 25px;
+}
+
+.hide {
+  display: none;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: auto;
+}
+
+
+.form-label {
+  text-align: left;
+}
+
+.form-button {
+  width: 60%;
+  margin: 10px auto;
+}
+
+.score-list {
+  width: 20%;
+  margin: 20px auto;
+}
+
+  /* responsive styling */
+
+@media screen and (max-width: 1000px) {
+  .quiz-container {
+    width: 90%;
+  }
+  .header {
+    padding: 30px 50px;
+  }
+  .description {
+    width: 80%;
+  }
+  .header {
+    width: 100%;
+  }
+  .answer-container {
+    width: 50%;
+  }
+  .score-list{
+    width: 40%;
+  }
+  .form {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .score-list{
+    width: 40%;
+  }
+  .quiz-container {
+    margin: 50px auto;
+  }
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .highscores {
+    margin: 8px;
+  }
+
+}

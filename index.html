@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+    <!-- div containing full website -->
+    <div class="quiz-container">
+        <!-- header section -->
+        <header class="header" id="header">
+            <button class="highscores btn" id="view-scores-btn">View Highscores</button>
+            <div class="timer hide" id="timer">
+                Time Remaining: 60
+            </div>
+        </header>
+        <!-- main section -->
+        <main class="main-section">
+
+            <!-- title section -->
+            <section id="title-screen" >
+                <h1 class="title">Coding Quiz Challenge</h1>
+                <p class="description">Try to answer the following questions within the time limit. Keep in mind that incorrect answers will penalize your time by ten seconds!</p>
+                <button class="btn" id="start-btn">Start Quiz</button>
+            </section>
+
+            <!-- questions section -->
+            <section class="hide" id="question-screen">
+                <h2 class="question" id="question-text">Question placeholder</h2>
+                <div class="answer-container" id="answer-container"></div>
+            </section>
+
+            <!-- end of quiz -->
+            <section class="hide" id="game-over-screen">
+                <h2>End of Quiz!</h2>
+                <p id="display-final-score">Your final score is:</p>
+                <form class="form" id="initials-form">
+                    <label class="form-label form-child">Record your score: </label>
+                    <input type="text" id="initials" name="initials" class="form-input form-child" placeholder="Enter Initials">
+                    <input type="submit" value="Submit" class="btn form-button form-child">
+                </form>
+            </section>
+
+            <!-- high scores -->
+            <section class="hide" id="high-score-screen">
+                <h2>Highscores</h2>
+                <ol class="score-list" id="score-list">
+                </ol>
+                <p id="high-score-error" class="hide">No high scores available. Play the quiz to see how you score!</p>
+                <button class="btn" id="home-btn">Home</button>
+                <button class="btn" id="clear-btn">Clear Highscores</button>
+            </section>
+        </main>
+    </div>
+    <script src="./assets/js/index.js"></script>
+</body>
+</html>
